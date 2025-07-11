@@ -8,8 +8,11 @@ export default function SuccessPage({ onLogoClick }) {
             </header>
 
             <main className="success-content">
-                <h1>TEBRIKLER!</h1>
-                <h1>SİPARİŞİNİZ ALINDI!</h1>
+                <h1 className="desktop-only">TEBRİKLER!</h1>
+                <h1 className="desktop-only">SİPARİŞİNİZ ALINDI!</h1>
+                <h1 className="mobile-only">TEBRIKLER!</h1>
+                <h1 className="mobile-only">SİPARİŞİNİZ</h1>
+                <h1 className="mobile-only">ALINDI!</h1>
             </main>
         </div>
     );

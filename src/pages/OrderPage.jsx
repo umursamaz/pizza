@@ -47,7 +47,7 @@ export default function OrderPage({ onSuccessClick, onLogoClick }) {
         <div className="order-page">
             <header className="order-header">
                 <img src={logo} alt="Teknolojik Yemekler" className="logo" onClick={onLogoClick} style={{ cursor: 'pointer' }}/>
-                <nav className="breadcrumb">Anasayfa &gt; Seçenekler &gt; <strong>Sipariş Oluştur</strong></nav>
+                <nav className="breadcrumb">Anasayfa &gt; <strong>Sipariş Oluştur</strong></nav>
             </header>
 
             <main className="order-content">
@@ -103,22 +103,47 @@ export default function OrderPage({ onSuccessClick, onLogoClick }) {
                         </div>
                     </fieldset>
 
-                    <label>
-                        Sipariş Notu  
-                        <input type="text" placeholder="Siparişine eklemek istediğin bir not var mı?" />
-                    </label>
+                    <div className="desktop-only">
+                        <label>
+                            Sipariş Notu  
+                            <input type="text" placeholder="Siparişine eklemek istediğin bir not var mı?" />
+                        </label>
 
-                    <div className="order-footer">
-                        <div className="counter">
-                        <button type="button" onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
-                        <span>{quantity}</span>
-                        <button type="button" onClick={() => setQuantity(quantity + 1)}>+</button>
+                        <div className="order-footer">
+                            <div className="counter">
+                            <button type="button" onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
+                            <span>{quantity}</span>
+                            <button type="button" onClick={() => setQuantity(quantity + 1)}>+</button>
+                            </div>
+
+                            <div className="summary">
+                            <p>Seçimler: <strong>{toppingsTotal.toFixed(2)}₺</strong></p>
+                            <p className="toplam">Toplam: <strong>{total.toFixed(2)}₺</strong></p>
+                            <button className="order-button" type="submit" >SİPARİŞ VER</button>
+                            </div>
                         </div>
+                    </div>
 
-                        <div className="summary">
-                        <p>Seçimler: <strong>{toppingsTotal.toFixed(2)}₺</strong></p>
-                        <p className="toplam">Toplam: <strong>{total.toFixed(2)}₺</strong></p>
-                        <button className="order-button" type="submit" >SİPARİŞ VER</button>
+                    <div className="mobile-only">
+                        <label>
+                            Sipariş Notu  
+                            <input type="text" placeholder="Siparişine eklemek istediğin bir not var mı?" />
+                        </label>
+
+                        <div className="order-footer">
+
+                            <div className="summary">
+                                <p>Seçimler <strong>{toppingsTotal.toFixed(2)}₺</strong></p>
+                                <p className="toplam">Toplam <strong>{total.toFixed(2)}₺</strong></p>
+                            </div>
+                            <div className="mobile-footer-actions">
+                                <div className="counter">
+                                    <button type="button" onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
+                                    <span>{quantity}</span>
+                                    <button type="button" onClick={() => setQuantity(quantity + 1)}>+</button>
+                                </div>
+                                <button className="order-button" type="submit" >SİPARİŞ VER</button>
+                            </div>
                         </div>
                     </div>
                 </form>

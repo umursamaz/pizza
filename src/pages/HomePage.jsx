@@ -12,7 +12,10 @@ export default function HomePage({ onOrderClick }) {
                 <h1 data-mobile="KOD ACIKTIRIR PİZZA, DOYURUR">
                     <span className="desktop-only">KOD ACIKTIRIR</span>
                     <span className="desktop-only">PİZZA, DOYURUR</span>
-                    <span className="mobile-only">KOD ACIKTIRIR PİZZA, DOYURUR</span>
+                    <span className="mobile-only">KOD</span>
+                    <span className="mobile-only">ACIKTIRIR</span>
+                    <span className="mobile-only">PİZZA,</span>
+                    <span className="mobile-only">DOYURUR</span>
                 </h1>
                 <button className="cta-button" onClick={onOrderClick}>
                 ACIKTIM
