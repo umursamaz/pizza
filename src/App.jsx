@@ -1,25 +1,26 @@
 import { useState } from 'react';
 import HomePage from './pages/HomePage.jsx';
-// import OrderPage from './pages/OrderPage.jsx';
+import OrderPage from './pages/OrderPage.jsx';
+import SuccessPage from './pages/SuccessPage.jsx';
 import './App.css';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
-
+  const goToHome = () => setCurrentPage('home');
   return (
     <div className="App">
       {currentPage === 'home' && (
         <HomePage onOrderClick={() => setCurrentPage('order')} />
       )}
       {currentPage === 'order' && (
-
-        <div style={{ padding: '50px', textAlign: 'center' }}>
-          <h1>Sipariş Sayfası</h1>
-          <p>Henüz hazır değil</p>
-          <button onClick={() => setCurrentPage('home')}>Geri Dön</button>
-        </div>
-        // <OrderPage />
+        <OrderPage 
+          onSuccessClick={() => {
+            console.log('Success click triggered in App.jsx');
+            setCurrentPage('success')
+          }} 
+          onLogoClick={goToHome}/>
       )}
+      {currentPage === 'success' && <SuccessPage onLogoClick={goToHome}/>}
     </div>
   );
 }
