@@ -1,16 +1,33 @@
 import logo from '../../images/iteration-1-images/logo.svg';
 import { useState } from 'react';
 import '../cssFiles/Order.css';
+import axios from 'axios';
 
 export default function Order({ onSuccessClick, onLogoClick }) {
     const [selectedToppings, setSelectedToppings] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedDough, setSelectedDough] = useState('');
+    const [orderNote, setOrderNote] = useState('');
+
     const basePrice = 85.50;
     const toppingPrice = 5;
     const toppings = ['Pepperoni','Domates', 'Biber', 'Sosis', 'Mısır', 'Sucuk', 'Kanada Jambonu', 'Ananas', 'Tavuk Izgara', 'Jalepeno', 'Kabak', 'Soğan', 'Sarımsak']
     const crustOptions = [ { value: '', label: 'Hamur Kalınlığı' }, { value: 'ince', label: 'İnce' }, { value: 'orta', label: 'Orta' }, { value: 'kalin', label: 'Kalın' }];
+    
+    const sendData = async (data) => {
+        try {const response = await axios.post('https://reqres.in/api/pizza', data, {
+                headers: {
+                    'x-api-key': 'reqres-free-v1'
+                }
+            });
+            // console.log('API Response:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('API Error:', error);
+            throw error;
+        }
+    };
     const handleToppingChange = (e) => {
         if (selectedToppings.includes(e)) {
             setSelectedToppings(selectedToppings.filter(t => t !== e));
@@ -21,24 +38,70 @@ export default function Order({ onSuccessClick, onLogoClick }) {
         }
     };
 
-    const handleOrder = (e) => {
-    e.preventDefault();
+    const handleOrder = async (e) => {
+        e.preventDefault();
+        
+        if (selectedSize === '') {
+            alert('Lütfen bir boyut seçin.');
+            return;
+        }
+        if (selectedDough === '') {
+            alert('Lütfen hamur kalınlığını seçin.');
+            return;
+        }
+        if (selectedToppings.length < 4) {
+            alert('En az 4 ek malzeme seçmelisiniz.');
+            return;
+        }
+        if (selectedToppings.length > 10) {
+            alert('En fazla 10 ek malzeme seçebilirsiniz.');
+            return;
+        }
+        if (orderNote.trim().length < 3) {
+            alert('İsminiz en az 3 karakter içermelidir.');
+            return;
+        }
+
+        const orderData = {
+            isim: orderNote,
+            boyut: selectedSize,
+            malzemeler: selectedToppings,
+            hamur: selectedDough
+        };
+        try {
+            const response = await sendData(orderData);
+            console.log('Order sent successfully:', response);
+            onSuccessClick();
+        } catch (error) {
+            console.error('Error sending order:', error);
+            alert('An error occured.');
+        }
     
-    if (selectedSize === '') {
-        alert('Lütfen bir boyut seçin.');
-        return;
-    }
-    if (selectedDough === '') {
-        alert('Lütfen hamur kalınlığını seçin.');
-        return;
+
+        // if ((selectedSize === '') || 
+        //     (selectedDough === '') || 
+        //     (selectedToppings.length < 4) || 
+        //     (selectedToppings.length > 10) || 
+        //     (orderNote.trim().length < 3)) {
+        //     onSuccessClick();
+        // } else {
+        //     return;
+        // }
     }
 
-    onSuccessClick();
-    }
+
 
     const toppingsTotal = selectedToppings.length * toppingPrice;
     const total = (basePrice + toppingsTotal) * quantity;
 
+
+    const isFormValid = () => {
+        return selectedSize !== '' && 
+            selectedDough !== '' && 
+            selectedToppings.length >= 4 && 
+            selectedToppings.length <= 10 && 
+            orderNote.trim().length >= 3;
+    };  
 
     return (
         <div className="order-page">
@@ -85,7 +148,7 @@ export default function Order({ onSuccessClick, onLogoClick }) {
                     </div>
                     <div className="toppings-info">
                         <legend>Ek Malzemeler</legend>
-                        <p>En fazla 10 malzeme seçebilirsiniz. 5₺</p>
+                        <p>En az 4, en fazla 10 malzeme seçebilirsiniz. 5₺</p>
                     </div>
                     <fieldset className="toppings-selection">
                         <div className="toppings-list">
@@ -106,7 +169,12 @@ export default function Order({ onSuccessClick, onLogoClick }) {
                     <div className="desktop-only">
                         <div className="order-note">
                             <legend>Sipariş Notu</legend>  
-                            <input type="text" placeholder="Siparişine eklemek istediğin bir not var mı?" />
+                            <input 
+                                type="text" 
+                                placeholder="Siparişine eklemek istediğin bir not var mı?" 
+                                value={orderNote}
+                                onChange={(e) => setOrderNote(e.target.value)}
+                            />
                         </div>
 
                         <div className="order-footer">
@@ -120,7 +188,12 @@ export default function Order({ onSuccessClick, onLogoClick }) {
                                 <h2>Sipariş Toplamı</h2>
                                 <p style={{color:"#5F5F5F"}}>Seçimler: <strong>{toppingsTotal.toFixed(2)}₺</strong></p>
                                 <p style={{color:"#CE2829"}}>Toplam: <strong>{total.toFixed(2)}₺</strong></p>
-                                <button className="order-button" type="submit" >SİPARİŞ VER</button>
+                                <button 
+                                    className="order-button" 
+                                    type="submit"
+                                    disabled={!isFormValid()}>
+                                    SİPARİŞ VER
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -128,7 +201,12 @@ export default function Order({ onSuccessClick, onLogoClick }) {
                     <div className="mobile-only">
                         <div className="order-note">
                             <legend>Sipariş Notu</legend>  
-                            <input type="text" placeholder="Siparişine eklemek istediğin bir not var mı?" />
+                            <input 
+                                type="text" 
+                                placeholder="Siparişine eklemek istediğin bir not var mı?"
+                                value={orderNote}
+                                onChange={(e) => setOrderNote(e.target.value)}
+                            />
                         </div>
 
                         <div className="order-footer">
@@ -143,7 +221,12 @@ export default function Order({ onSuccessClick, onLogoClick }) {
                                     <span>{quantity}</span>
                                     <button type="button" onClick={() => setQuantity(quantity + 1)}>+</button>
                                 </div>
-                                <button className="order-button" type="submit" >SİPARİŞ VER</button>
+                                <button 
+                                    className="order-button" 
+                                    type="submit"
+                                    disabled={!isFormValid()}>
+                                    SİPARİŞ VER
+                                </button>
                             </div>
                         </div>
                     </div>
