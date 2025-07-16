@@ -1,5 +1,6 @@
 .home-page {
   position: relative;
+  background-color: #CE2829;
   width: 100%;
   min-height: 100vh;
   background-repeat: no-repeat;
@@ -11,6 +12,6 @@
 @media (max-width: 540px) {
   .home-page {
     background-size: cover;
-    background-position: center center;
+    background-position: center 140px;
   }
 }

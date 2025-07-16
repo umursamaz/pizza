@@ -20,9 +20,9 @@
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 86px;
   font-weight: 300;
-  line-height: 1.2;
+  line-height: 92px;
   margin: 0;
-  color: white;
+  color: #FFFFFF;
   letter-spacing: 1.5px;
 }
 
@@ -38,6 +38,8 @@
   font-family: 'Barlow', sans-serif;
   font-size: 18px;
   font-weight: 600;
+  font-style: semi-bold;
+  height: 56px;
   background-color: #FDC913;
   color: #292929;
   border: none;
@@ -60,8 +62,8 @@
   .mobile-only {
     display: block;
   }
-  
-  .home-content h2 {
-    font-size: 48px; 
+
+  .cta-button {
+    font-size: 24px;
   }
 }

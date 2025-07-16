@@ -12,7 +12,7 @@
     position: relative;
 }
 
-img {
+.success-page img {
     position: absolute;
     cursor: pointer;
     width: 362px;
