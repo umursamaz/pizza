@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import SuccessPage from './pages/SuccessPage.jsx';
 import Home from './pages/Home.jsx';
 import Order from './pages/Order.jsx';
-// import Success from './pages/Success.jsx';
+import Success from './pages/Success.jsx';
 
 import './App.css';
 
@@ -20,7 +19,7 @@ export default function App() {
           onLogoClick={goToHome}
         />
       )}
-      {currentPage === 'success' && <SuccessPage onLogoClick={goToHome}/>}
+      {currentPage === 'success' && <Success onLogoClick={goToHome}/>}
     </div>
   );
 }

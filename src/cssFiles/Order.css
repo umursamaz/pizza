@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;600;700&family=Barlow:wght@400;500;600;700&display=swap');
 .order-page {
     font-family: 'Barlow', sans-serif;
     color: #292929;
@@ -355,7 +356,7 @@ button:hover {
         text-align: center;
     }
 
-    .logo {
+    .order-header .logo {
         position: absolute;
         cursor: pointer;
         pointer-events: auto;
