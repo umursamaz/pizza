@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import HomePage from './pages/HomePage.jsx';
-import OrderPage from './pages/OrderPage.jsx';
 import SuccessPage from './pages/SuccessPage.jsx';
+import Home from './pages/Home.jsx';
+import Order from './pages/Order.jsx';
+// import Success from './pages/Success.jsx';
+
 import './App.css';
 
 export default function App() {
@@ -10,15 +12,13 @@ export default function App() {
   return (
     <div className="App">
       {currentPage === 'home' && (
-        <HomePage onOrderClick={() => setCurrentPage('order')} />
+        <Home onOrderClick={() => setCurrentPage('order')} />
       )}
       {currentPage === 'order' && (
-        <OrderPage 
-          onSuccessClick={() => {
-            console.log('Success click triggered in App.jsx');
-            setCurrentPage('success')
-          }} 
-          onLogoClick={goToHome}/>
+        <Order 
+          onSuccessClick={() => { setCurrentPage('success') }} 
+          onLogoClick={goToHome}
+        />
       )}
       {currentPage === 'success' && <SuccessPage onLogoClick={goToHome}/>}
     </div>
